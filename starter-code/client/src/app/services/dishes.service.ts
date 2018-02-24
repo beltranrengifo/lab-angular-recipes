@@ -17,8 +17,10 @@ export class DishesService {
       .map((res) => res.json());
   }
 
-  assign(ing_id, dish_id) {
-    return this.http.post(`${this.BASE_URL}/api/dishes/${dish_id}/ingredients/${ing_id}/add`, ing_id, dish_id)
-      .map((ing_id, dish_id) => console.log(ing_id, dish_id));
+  assign(ing_id, dish_id, qty) {
+    console.log(`${this.BASE_URL}/api/dishes/${dish_id}/ingredients/${ing_id}/add`);
+
+
+    return this.http.post(`${this.BASE_URL}/api/dishes/${dish_id}/ingredients/${ing_id}/add`, {quantity:qty}).map(res => console.log('hi'+res));
   }
 }

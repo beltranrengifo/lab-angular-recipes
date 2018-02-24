@@ -15,17 +15,15 @@
 <div class="row">
   <div class="col-sm-4">
     <h2>Create new ingredient</h2>
-    <app-ingredients-form></app-ingredients-form>
+    <app-ingredients-form (outputcall)="reloadIngredients()"></app-ingredients-form>
   </div>
   <div class="col-sm-8">
     <h2>List of ingredients</h2>
-    <ul class="ingredient-list" *ngFor="let ing of ingred">
+    <ul class="ingredient-list" *ngFor="let ing of ingred; let i = index">
       <li>
-        <a [routerLink]="['/',ing._id]">{{ing.name}}</a>
-        <form (ngSubmit)="addIngredient(ing._id,dish._id,addIngForm)" #addIngForm="ngForm">
-          <input type="number" name="qty"   value="1">
-          <button>add</button>
-        </form>
+        <a class="d-block" [routerLink]="['/ingredient',ing._id]">{{ing.name}}</a>
+        <input type="number" [(ngModel)]="ingred[i].qty"/>
+        <button (click)="addIngredient(ing._id,dish._id,ingred[i].qty)">add</button>
       </li>
     </ul>
   </div>

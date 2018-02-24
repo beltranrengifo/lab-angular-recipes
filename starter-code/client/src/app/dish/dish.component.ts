@@ -12,8 +12,10 @@ import { IngredientsService } from '../services/ingredients.service';
 export class DishComponent implements OnInit {
   dish: any;
   ingred: any;
+  defQty:number=1;
   constructor(private route: ActivatedRoute, private dishesS: DishesService, private ingredientsS: IngredientsService) {
-    this.ingredientsS.getIngredients().subscribe(ingred => this.ingred = ingred);
+    //assigning value toingred class property; PLUS assing qty key:value on constructor to obj returned from db => look at the .map!
+    this.ingredientsS.getIngredients().subscribe(ingred => this.ingred = ingred.map(e => {e.qty=1;return e;}));
   }
   //get params on init
   ngOnInit() { this.route.params.subscribe(params => this.getDish(params['id'])) }
@@ -22,8 +24,12 @@ export class DishComponent implements OnInit {
   //get ingredient from db
   getIngredient(id) { this.ingredientsS.get(id).subscribe(ingred => this.ingred = ingred) }
 
-  addIngredient(ing_id,dish_id,form) {
-    console.log(ing_id, dish_id, form);
-    this.dishesS.assign(ing_id, dish_id).subscribe()
+  addIngredient(ing_id,dish_id,qty) {
+    console.log(ing_id, dish_id, qty)
+    this.dishesS.assign(ing_id, dish_id, qty).subscribe()
+  }
+  reloadIngredients(){
+    this.ingredientsS.getIngredients().subscribe(ingred => this.ingred = ingred.map(e => { e.qty = 1; return e; }));
+    console.log("actualizando los ingredientes")
   }
 }

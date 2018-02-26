@@ -6,6 +6,17 @@
   <div class="col-sm-8">
     <h2>{{dish.name}}</h2>
     <p>{{dish.description}}</p>
+    <h4>Ingredients added:</h4>
+    <ul>
+      <li *ngFor="let in of dish.ingredients">
+         <!-- {{in | json}} -->
+        <h6>
+          {{in.ingredientId.name}} x {{in.quantity}}
+        </h6>
+        <img [src]="in.ingredientId.image" alt="in.name">
+        <p>{{in.ingredientId.description}}</p>
+      </li>
+    </ul>
     <a class="button" [routerLink]="['/']">Back</a>
   </div>
 </div>

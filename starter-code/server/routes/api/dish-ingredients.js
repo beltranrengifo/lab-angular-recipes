@@ -17,7 +17,7 @@ router.post('/dishes/:dishId/ingredients/:id/add', (req, res) => {
   quantity = Number(quantity);
 
   Dish
-    .findById(dishId)
+    .findByIdAndUpdate(dishId)
     .populate('ingredients.ingredientId')
     .exec(
       (err, dish) => {
@@ -49,9 +49,8 @@ router.post('/dishes/:dishId/ingredients/:id/add', (req, res) => {
 
         dish.save((err) => {
           console.log(dish)
-          if (err) {
-            
-            return res.status(500).json(err)
+          if (err) { 
+            return res.status(500).json('es este error ' +err)
           }
           
           Ingredient.findById(id, (err, ingredient) => {
